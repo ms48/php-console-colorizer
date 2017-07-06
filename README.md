@@ -13,13 +13,15 @@ Composer is the recommended way to install this package.
 
 ```
 
+## Laravel 5 Configurations
+
 Once composer has installed the package, add this line of code to the `providers` array located in your `config/app.php` file:
 ```php
-
+Ms48\PhpConsoleColorizer\Laravel\ConsoleColorizerProvider::class,
 ```
 Add this line to the `aliases` array:
 ```php
-
+'ConsoleColorizer' => Ms48\PhpConsoleColorizer\Laravel\Facades\ConsoleColorizer::class,
 ```
 
 ## Code Examples
