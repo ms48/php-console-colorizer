@@ -10,8 +10,18 @@ namespace Ms48\PhpConsoleColorizer;
  */
 class ConsoleColorizer
 {
-
+    /**
+     * Constant representing a scape character in the colors.
+     *
+     * @var string
+     */
     const ESC = "\033[";
+    
+    /**
+     * Constant representing a reseting style value.
+     *
+     * @var string
+     */
     const RESET_STYLES = "\033[0m";
             
     /**
@@ -33,61 +43,58 @@ class ConsoleColorizer
      *
      * @var boolean
      */
-    protected $colorSupport;
-    
+    protected $colorSupport;    
    
     public function __construct()
     {
         $this->currentString = "";        
         
-        //initialize the array 
+        //init the array 
         $this->styles = [
             /*
              * font styles
-             */            
-            'reset'            => '0',
-            'bold'             => '1',
-            'dark'             => '2',
-            'italic'           => '3',
-            'underline'        => '4',
+             */
+            'bold' => '1',
+            'dark' => '2',
+            'italic' => '3',
+            'underline' => '4',
             
             /*
              * foreground colors
              */
-            'black'            => '30',
-            'red'              => '31',
-            'green'            => '32',
-            'yellow'           => '33',
-            'blue'             => '34',
-            'magenta'          => '35',
-            'cyan'             => '36',
+            'black' => '30',
+            'red' => '31',
+            'green' => '32',
+            'yellow' => '33',
+            'blue' => '34',
+            'magenta' => '35',
+            'cyan' => '36',
+            'gray' => '37',
             
-            'light_gray'       => '37',
+            'dark_gray' => '90',
+            'light_red' => '91',
+            'light_green' => '92',
+            'light_yellow' => '93',
+            'light_blue' => '94',
+            'light_magenta' => '95',
+            'light_cyan' => '96',
+            'white' => '97',            
             
-            'default'          => '39',
-            
-            'dark_gray'        => '90',
-            'light_red'        => '91',
-            'light_green'      => '92',
-            'light_yellow'     => '93',
-            'light_blue'       => '94',
-            'light_magenta'    => '95',
-            'light_cyan'       => '96',
-            'white'            => '97',
+            'default' => '39',
             
             /*
              * background colors
              */
-            'bg_black'         => '40',
-            'bg_red'           => '41',
-            'bg_green'         => '42',
-            'bg_yellow'        => '43',
-            'bg_blue'          => '44',
-            'bg_magenta'       => '45',
-            'bg_cyan'          => '46',
-            'bg_light_gray'    => '47',
+            'bg_black' => '40',
+            'bg_red' => '41',
+            'bg_green' => '42',
+            'bg_yellow' => '43',
+            'bg_blue' => '44',
+            'bg_magenta' => '45',
+            'bg_cyan' => '46',
+            'bg_gray' => '47',
             
-            'bg_default'       => '49',
+            'bg_default' => '49',
         ];
         
         //check CLI is supporting colors;
@@ -104,6 +111,7 @@ class ConsoleColorizer
      *
      * @return bool true if the stream supports colorization, false otherwise
      * @link https://github.com/symfony/console/blob/master/Output/StreamOutput.php#L93
+     * @codeCoverageIgnore
      */
     protected function hasColorSupport()
     {
@@ -121,13 +129,13 @@ class ConsoleColorizer
     /**
      * Add string to the class and do the styling works.
      * You can chaining this method as you wish.
-     * To get an out put, you have to call the get() method after finished styling works
+     * To get an out put, you have to call the colorize() method after finished styling works
      *
      * @param string $text String to be colorized
      * @param string $color optional foreground color
      * @param string $background optional background color
      * @param string $style optional font style
-     * @return  Colorize The Colorize object     
+     * @return  Colorize The Colorize object
      */
     
     public function addColor(
@@ -158,20 +166,18 @@ class ConsoleColorizer
      *
      * @return  Colorize()     
      */
-    public function get()
+    public function colorize()
     {
         $str = $this->currentString;
         $this->currentString = '';
         return $str;
     }
     
-    
-    
     protected function setForgroundColor($color)
     {
         $str = strtolower($color);
         if(!$this->isStyleNameExist($str)){
-            throw new StyleNotFoundEception('Font color not found'); 
+            throw new Exceptions\StyleNotFoundException('Font color not found'); 
         }
         
         $code = $this->styles[$str];        
@@ -184,7 +190,7 @@ class ConsoleColorizer
     {
         $str = strtolower($background);
         if(!$this->isStyleNameExist('bg_'.$str)){
-            throw new StyleNotFoundEception('Background color not found'); 
+            throw new Exceptions\StyleNotFoundException('Background color not found'); 
         }
         
         $code = $this->styles['bg_'.$str];        
@@ -197,7 +203,7 @@ class ConsoleColorizer
     {
         $str = strtolower($style);
         if(!$this->isStyleNameExist($str)){
-            throw new StyleNotFoundEception('Font color not found'); 
+            throw new Exceptions\StyleNotFoundException('Font color not found'); 
         }
         
         $code = $this->styles[$str];        
