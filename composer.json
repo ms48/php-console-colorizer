@@ -1,0 +1,32 @@
+{
+    "name": "ms48/php-console-colorizer",	
+    "type": "library",
+    "description": "A simple ANSI colorizer for your CLI",
+    "keywords": ["php", "console", "color", "CLI", "ansi"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Shanuka Dilshan",
+            "email": "ms48mail@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"    
+    },
+    "autoload": {
+        "psr-4": {
+            "Ms48\\PhpConsoleColorizer\\": "src/Ms48/PhpConsoleColorizer"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ms48\\PhpConsoleColorizer\\ConsoleColorizerProvider"
+            ],
+            "aliases": {
+                "ConsoleColorizer": "Ms48\\PhpConsoleColorizer\\Facades\\ConsoleColorizer"
+            }
+        }
+    }
+    
+}
