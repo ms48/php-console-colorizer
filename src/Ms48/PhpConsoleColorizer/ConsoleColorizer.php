@@ -3,7 +3,7 @@
 namespace Ms48\PhpConsoleColorizer;
 
 /**
- * Show progress bar in the console
+ * Add ANSI colorizing to your console.
  *
  * @author Shanuka Dilshan <https://github.com/ms48>
  * @license MIT License
